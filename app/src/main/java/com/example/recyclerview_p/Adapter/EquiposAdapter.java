@@ -1,5 +1,7 @@
 package com.example.recyclerview_p.Adapter;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import  androidx.recyclerview.widget.RecyclerView;
 
+import com.example.recyclerview_p.DetalleActivity;
 import com.example.recyclerview_p.Models.Equipos;
 import com.example.recyclerview_p.R;
 
@@ -38,26 +41,44 @@ public class EquiposAdapter extends RecyclerView.Adapter<EquiposAdapter.ViewHold
         return Lista_Equipos.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
             TextView txNombre;
             TextView txLiga;
             TextView txEstadio;
             Equipos cp;
 
-            public ViewHolder(@NonNull View itemView) {
-                super(itemView);
-                txNombre = itemView.findViewById(R.id.txNombre);
-                txLiga = itemView.findViewById(R.id.txLiga);
-                txEstadio = itemView.findViewById(R.id.txEstadio);
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            txNombre = itemView.findViewById(R.id.txNombre);
+            txLiga = itemView.findViewById(R.id.txLiga);
+            txEstadio = itemView.findViewById(R.id.txEstadio);
+
+            itemView.setOnClickListener(this);
+        }
+
+        public void setData(Equipos c) {
+            cp = c;
+            txNombre.setText(cp.getNombre());
+            txLiga.setText(cp.getLiga());
+            txEstadio.setText(cp.getEstadio());
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(v.getContext(), DetalleActivity.class);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("nombre", cp.getNombre());
+            bundle.putString("liga", cp.getLiga());
+            bundle.putString("estadio", cp.getEstadio());
+            if (cp.getDescripcion() != null) {
+                bundle.putString("descripcion", cp.getDescripcion());
             }
 
-            public void setData(Equipos c) {
-                cp=c;
-                txNombre.setText(cp.getNombre());
-                txLiga.setText(cp.getLiga());
-                txEstadio.setText(cp.getEstadio());
-            }
+            intent.putExtras(bundle);
+            v.getContext().startActivity(intent);
         }
-        }
+    }
+}
 

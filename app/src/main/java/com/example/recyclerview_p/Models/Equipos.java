@@ -5,10 +5,13 @@ public class Equipos {
     private String liga;
     private String estadio;
 
-    public Equipos(String nombre, String liga, String estadio) {
+    private String descripcion = null;
+
+    public Equipos(String nombre, String liga, String estadio, String descripcion) {
         this.nombre = nombre;
         this.liga = liga;
         this.estadio = estadio;
+        this.descripcion =descripcion;
     }
 
     public String getNombre() {
@@ -20,4 +23,5 @@ public class Equipos {
     public String getEstadio() {
         return estadio;
     }
+    public String getDescripcion(){return  descripcion;}
 }
